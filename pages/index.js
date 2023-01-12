@@ -3,10 +3,10 @@ import { getAllUsers } from "../prisma/user";
 export default function Home({ users }) {
   return (
     <>
-    <h1>USERS</h1>
-      {users.map((user) => (
+    <h1>LOGIN</h1>
+      {/* {users.map((user) => (
         <div key={user.id}>{user.name}</div>
-      ))}
+      ))} */}
     </>
   );
 }
