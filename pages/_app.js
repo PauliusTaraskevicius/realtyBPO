@@ -1,13 +1,16 @@
+import { SessionProvider } from "next-auth/react"
+
 import "../styles/globals.css";
-import { Fragment } from 'react';
+import { Fragment } from "react";
+import CssBaseline from "@mui/material/CssBaseline";
 
-import CssBaseline from '@mui/material/CssBaseline';
-
-export default function App({ Component, pageProps }) {
+export default function App({Component, pageProps: {session, ...pageProps}}) {
   return (
     <Fragment>
-      <CssBaseline/>
-      <Component {...pageProps} />
+      <CssBaseline />
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
     </Fragment>
   );
 }

@@ -1,33 +1,26 @@
-import { getAllUsers } from "../prisma/user";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-export default function Home({ users }) {
-  return (
-    <>
-    <h1>LOGIN</h1>
-      {/* {users.map((user) => (
-        <div key={user.id}>{user.name}</div>
-      ))} */}
-    </>
-  );
-}
+export default function Home() {
+  const { data: session, status } = useSession();
 
-export async function getStaticProps() {
-  const users = await getAllUsers();
+  if (status === "loading") {
+    return <>Loading...</>;
+  }
 
-  // Convert the updatedAt and createdAt in each user to string
-  // Otherwise, Next.js will throw an error
-  // Not required if you are not using the date fields
-
-  const updatedUsers = users.map((user) => ({
-    ...user,
-    updatedAt: user.updatedAt.toString(),
-    createdAt: user.createdAt.toString(),
-  }));
-
-  return {
-    props: {
-      users: updatedUsers,
-    },
-    revalidate: 60,
-  };
+  if (status === "authenticated") {
+    return (
+      <>
+        Signed in as {session.user.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    );
+  }
+  if (status === "unauthenticated") {
+    return (
+      <>
+        Not signed in <br />
+        <button onClick={() => signIn()}>Sign in</button>
+      </>
+    );
+  }
 }
