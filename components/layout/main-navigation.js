@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,7 +15,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import BusinessIcon from '@mui/icons-material/Business';
+import BusinessIcon from "@mui/icons-material/Business";
 
 const pages = ["About", "Contact"];
 
@@ -85,11 +87,18 @@ function Navigation() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              <Link href="/orders" passHref>
+                <MenuItem>
+                  <Typography textAlign="center">Orders</Typography>
                 </MenuItem>
-              ))}
+              </Link>
+
+              <Link href="/reports">
+                <MenuItem>
+                  <Typography textAlign="center">Reports</Typography>
+                </MenuItem>
+              </Link>
+
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -113,16 +122,30 @@ function Navigation() {
           </Typography>
 
           {/* DESKTOP MENU */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent:'end' }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block"}}
-              >
-                {page}
-              </Button>
-            ))}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "end",
+            }}
+          >
+            <Link href='/orders'>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Orders
+            </Button>
+            </Link>
+            <Link href='/reports'>
+              
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Reports
+            </Button>
+            </Link>
           </Box>
           {status === "authenticated" ? (
             <Box sx={{ flexGrow: 0 }}>
@@ -147,7 +170,9 @@ function Navigation() {
                 <MenuItem onClick={signOut}>Logout</MenuItem>
               </Menu>
             </Box>
-          ) : ''}
+          ) : (
+            ""
+          )}
         </Toolbar>
       </Container>
     </AppBar>
