@@ -1,0 +1,5 @@
+- add account authenticated? field
+- user info edit
+- permissions for admin:
+    - delete, edit user,
+    - add, delete, edit, assign order,

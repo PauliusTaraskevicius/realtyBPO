@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,8 +13,9 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import BusinessIcon from '@mui/icons-material/Business';
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["About", "Contact"];
 
 function Navigation() {
   const { data: session, status } = useSession();
@@ -38,10 +39,10 @@ function Navigation() {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <BusinessIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -50,14 +51,14 @@ function Navigation() {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
+              fontFamily: "roboto",
+              fontWeight: 200,
+              letterSpacing: ".1rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            LOGO
+            realtyBPO
           </Typography>
           {/* MOBILE MENU */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -112,7 +113,7 @@ function Navigation() {
           </Typography>
 
           {/* DESKTOP MENU */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent:'center' }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent:'end' }}>
             {pages.map((page) => (
               <Button
                 key={page}

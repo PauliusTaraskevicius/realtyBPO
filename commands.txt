@@ -2,3 +2,5 @@ npx prisma generate
 npx prisma db push - push changed to database
 npx prisma studio - to see data
 npx prisma db push --force-reset - drop database
+
+
