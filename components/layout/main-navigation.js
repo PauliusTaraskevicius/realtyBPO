@@ -74,32 +74,57 @@ function Navigation() {
             >
               <MenuIcon />
             </IconButton>
+            {status === "authenticated" ? (
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                keepMounted
+                transformOrigin={{ vertical: "top", horizontal: "left" }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                <Link href="/orders">
+                  <MenuItem>
+                    <Typography textAlign="center">Orders</Typography>
+                  </MenuItem>
+                </Link>
 
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-              keepMounted
-              transformOrigin={{ vertical: "top", horizontal: "left" }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              <Link href="/orders" passHref>
-                <MenuItem>
-                  <Typography textAlign="center">Orders</Typography>
-                </MenuItem>
-              </Link>
+                <Link href="/reports">
+                  <MenuItem>
+                    <Typography textAlign="center">Reports</Typography>
+                  </MenuItem>
+                </Link>
+              </Menu>
+            ) : (
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                keepMounted
+                transformOrigin={{ vertical: "top", horizontal: "left" }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                <Link href="/about">
+                  <MenuItem>
+                    <Typography textAlign="center">About</Typography>
+                  </MenuItem>
+                </Link>
 
-              <Link href="/reports">
-                <MenuItem>
-                  <Typography textAlign="center">Reports</Typography>
-                </MenuItem>
-              </Link>
-
-            </Menu>
+                <Link href="/contact">
+                  <MenuItem>
+                    <Typography textAlign="center">Contact</Typography>
+                  </MenuItem>
+                </Link>
+              </Menu>
+            )}
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
@@ -122,31 +147,59 @@ function Navigation() {
           </Typography>
 
           {/* DESKTOP MENU */}
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              justifyContent: "end",
-            }}
-          >
-            <Link href='/orders'>
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "block" }}
+          {status === "authenticated" ? (
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+                justifyContent: "end",
+              }}
             >
-              Orders
-            </Button>
-            </Link>
-            <Link href='/reports'>
-              
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "block" }}
+              <Link href="/orders">
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  Orders
+                </Button>
+              </Link>
+
+              <Link href="/reports">
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  Reports
+                </Button>
+              </Link>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+                justifyContent: "end",
+              }}
             >
-              Reports
-            </Button>
-            </Link>
-          </Box>
+              <Link href="/about">
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  About
+                </Button>
+              </Link>
+
+              <Link href="/contact">
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  Contact
+                </Button>
+              </Link>
+            </Box>
+          )}
           {status === "authenticated" ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
