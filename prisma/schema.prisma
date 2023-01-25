@@ -47,10 +47,75 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  order         Order[]
 
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+model Broker {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  brokerId      String    @db.ObjectId
+  title         String
+  email         String?   @unique
+  broker        Order?    @relation("Broker", fields: [brokerId], references: [id])
+}
+
+model Provider {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  providerId    String    @db.ObjectId
+  name          String
+  provider      Order?    @relation("Provider", fields: [providerId], references: [id])
+}
+
+model Order {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  orderId       String      @db.ObjectId
+  address       String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  status        OrderStatus @default(waitingPhotos)
+  notes         String?    
+  photos        Image[]     @relation(name: "Photos")
+  files         File[]      @relation(name: "Files")
+  broker        Broker[]    @relation(name: "Broker")
+  provider      Provider[]  @relation(name: "Provider")
+  agent         User        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type          OrderType   @default(EXTERIOR)
+}
+
+enum OrderStatus {
+  waitingPhotos
+  waitingEvaluation
+  waitingReevaluation
+  completed
+  cancelled
+}
+
+enum OrderType {
+  COMMERCIAL
+  INTERIOR
+  EXTERIOR
+  PMIREMOVAL
+  PCREXTERIOR
+  PCRINTERIOR
+}
+
+
+model Image {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  photoId        String           @db.ObjectId
+  galleryPhotos  Order?           @relation("Photos", fields: [photoId], references: [id])
+  format         String
+  version        String
+}
+
+model File {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  fileId         String           @db.ObjectId
+  galleryFiles   Order?           @relation("Files", fields: [fileId], references: [id])
+  format         String
 }

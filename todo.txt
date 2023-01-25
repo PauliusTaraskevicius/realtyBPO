@@ -3,3 +3,5 @@
 - permissions for admin:
     - delete, edit user,
     - add, delete, edit, assign order,
+
+- add roles to users
